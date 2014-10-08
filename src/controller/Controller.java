@@ -104,6 +104,9 @@ public class Controller extends HttpServlet {
 				case "register":
 					forwardPage = register(request, response, session);
 					break;
+				case "logout":
+					forwardPage = logout(request, response, session);
+					break;
 				case "download":
 					forwardPage = download(request, response, session);
 					break;
@@ -305,6 +308,14 @@ public class Controller extends HttpServlet {
 			System.out.println("login: user = " + session.getAttribute("user"));
 		}
 
+		return forwardPage;
+	}
+	
+	private String logout(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+		String forwardPage = "login.jsp";
+		session.invalidate();
+		
 		return forwardPage;
 	}
 
