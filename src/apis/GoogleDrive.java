@@ -40,16 +40,6 @@ import com.google.api.services.oauth2.model.Userinfoplus;
  *
  */
 public class GoogleDrive {
-
-	// Path to client_secrets.json which should contain a JSON document such as:
-	//   {
-	//     "web": {
-	//       "client_id": "[[YOUR_CLIENT_ID]]",
-	//       "client_secret": "[[YOUR_CLIENT_SECRET]]",
-	//       "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-	//       "token_uri": "https://accounts.google.com/o/oauth2/token"
-	//     }
-	//   }
 	/**
 	 * Scopes that OAuth needs to ask permissions for
 	 */
