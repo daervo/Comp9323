@@ -40,7 +40,7 @@ public class Stormpath implements UserManagement{
 	/**
 	 * API client
 	 */
-	private Client client = null;
+	public static Client client = null;
 	/**
 	 * API application
 	 */

@@ -2,6 +2,7 @@ package controller;
 
 
 import interfaces.UserManagement;
+import interfaces.Authorization;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import other.Authz;
 import apis.GoogleDrive;
 import apis.Stormpath;
 
@@ -170,6 +172,19 @@ public class Controller extends HttpServlet {
 	 */
 	private String uploadFile(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
+		//gets the user name of the owner of the session	
+		String userName=(String)session.getAttribute("user");
+		//testing the user name is correct
+		System.out.println("the user name to be sent is:"+userName);
+		//calling the authorization checking method passing it the user name and the action to be done
+		if (!(other.Authz.IsAuthorized(userName, "upload")))
+		{
+		
+		//if user not authorized he will be directed to the logout screen
+		System.out.println("not authorised");
+		request.setAttribute("message", "You are not authorized");
+			return "logout.jsp";
+		}
 
 		// gets absolute path of the web application
 		String appPath = request.getServletContext().getRealPath("");
