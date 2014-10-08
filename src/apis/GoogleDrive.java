@@ -1,5 +1,7 @@
 package apis;
 
+import interfaces.Storage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,7 +41,7 @@ import com.google.api.services.oauth2.model.Userinfoplus;
  * @author Ervin
  *
  */
-public class GoogleDrive {
+public class GoogleDrive implements Storage{
 	/**
 	 * Scopes that OAuth needs to ask permissions for
 	 */
@@ -437,15 +439,6 @@ public class GoogleDrive {
 	}
 
 
-	/**
-	 * Send the file to the drive
-	 * @param body the file
-	 * @param mediaContent the content type
-	 * @throws IOException
-	 */
-	public void send(com.google.api.services.drive.model.File body, FileContent mediaContent) throws IOException{
-		drive.files().insert(body, mediaContent).execute();
-	}
 
 	/**
 	 * Download a file's content.
@@ -545,4 +538,16 @@ public class GoogleDrive {
       }
       return listParentReference;
   }
+	/**
+	 * Uploadthe file to the drive
+	 * @param body the file
+	 * @param mediaContent the content type
+	 * @throws IOException
+	 */
+  	@Override
+	public void upload(com.google.api.services.drive.model.File body,
+		FileContent mediaContent) throws IOException {
+		drive.files().insert(body, mediaContent).execute();
+	
+	}
 }

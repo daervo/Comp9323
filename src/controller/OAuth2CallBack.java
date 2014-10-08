@@ -107,7 +107,7 @@ public class OAuth2CallBack extends HttpServlet {
 			    FileContent mediaContent = new FileContent("text/plain", fileContent);
 			    
 			    
-			    googleDrive.send(body, mediaContent);
+			    googleDrive.upload(body, mediaContent);
 			}
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block

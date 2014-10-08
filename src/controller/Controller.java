@@ -201,7 +201,7 @@ public class Controller extends HttpServlet {
 					FileContent mediaContent = new FileContent("text/plain", fileContent);
 					
 
-					googleDrive.send(body, mediaContent);
+					googleDrive.upload(body, mediaContent);
 					fileContent.delete();
 				}
 
