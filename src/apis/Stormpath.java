@@ -168,7 +168,6 @@ public class Stormpath implements UserManagement{
 		Account current = searchAccount(username);
 		
 		return "Username: " + current.getUsername()+ "</br>Password: ";
-		
 	}
 
 	/** Utility function that returns an account object given the account username
