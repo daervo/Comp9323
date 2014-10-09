@@ -21,6 +21,8 @@ public class Authz extends Stormpath {
 	
 	public static boolean IsAuthorized(String username, String operation) {
 		System.out.println("the sent user name is"+username);
+		if (username==null)
+			return false;
 		Account current = new apis.Stormpath().searchAccount(username);
 		String href ="https://api.stormpath.com/v1/groups/PCv2f0N9VvnmIjmgmRNTO";
 		Group studentgroup = client.getResource(href, Group.class);
