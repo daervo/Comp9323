@@ -39,7 +39,7 @@ public class Authz extends Stormpath {
 		    	System.out.println("student is Authorised");
 		    	return true;
 		    	}
-		    else if (group.equals(teachergroup)&& operation=="download")
+		    else if (group.equals(teachergroup)&& (operation=="download" || operation=="list"))
 		    {
 		    	System.out.println("teacher is Authorised");
 		    	return true;

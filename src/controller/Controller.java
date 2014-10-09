@@ -142,6 +142,14 @@ public class Controller extends HttpServlet {
 	 * @return downloadFile page
 	 */
 	private String download(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String userName=(String)session.getAttribute("user");
+		System.out.println("the user listing the files is:"+userName);
+		if (!(other.Authz.IsAuthorized(userName, "download")))
+		{
+		System.out.println("not authorised");
+		request.setAttribute("message", "You are not authorized");
+			return "logout.jsp";
+		}
 		return "downloadFile.jsp";
 	}
 
@@ -153,6 +161,14 @@ public class Controller extends HttpServlet {
 	 * @return listFile page
 	 */
 	private String listFiles(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String userName=(String)session.getAttribute("user");
+		System.out.println("the user listing the files is:"+userName);
+		if (!(other.Authz.IsAuthorized(userName, "list")))
+		{
+		System.out.println("not authorised");
+		request.setAttribute("message", "You are not authorized");
+			return "logout.jsp";
+		}
 		try {
 			request.setAttribute("links", googleDrive.getFileDownloadLinks());
 		} catch (IOException e) {
