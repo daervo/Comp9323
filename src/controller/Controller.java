@@ -118,6 +118,12 @@ public class Controller extends HttpServlet {
 				case "create_account":
 					forwardPage = createAccount(request, response, session);
 					break;
+				case "create_teacher":
+					forwardPage = createTeacher(request, response, session);
+					break;
+				case "add_to_group":
+					forwardPage = addToGroup(request, response, session);
+					break;
 				case "get_details":
 					forwardPage = getDetails(request, response, session);
 					break;
@@ -379,6 +385,80 @@ public class Controller extends HttpServlet {
 
 
 		return "login.jsp";
+	}
+	
+	/**
+	 * this Method is to create a teacher (user assigned to a techer group directly)
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	private String createTeacher(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+
+		//Set the account properties
+		String givenName = request.getParameter("given_name");
+		String surname = request.getParameter("surname");
+		String userName = request.getParameter("email"); //optional, defaults to email if unset
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String password2 = request.getParameter("password2");
+		if (password.equals(password2)){
+			stormpath.createAccount(givenName, surname, userName, password, email, "Teacher");
+			request.setAttribute("message", "Registration Successful!");
+		}
+
+
+		//Create the account using the existing Application object
+
+
+		return "login.jsp";
+	}
+		/**
+	 * This Method is to add a user to a specific group. it checks if the user is already in the group 
+	 * and if not it will remove him from the old group and set him in the new one
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	private String addToGroup(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+
+		Account current = new apis.Stormpath().searchAccount(request.getParameter("username"));
+		
+		System.out.println("the user to be added is"+current.getFullName());
+		
+		
+		GroupMembershipList groupMemberships =current.getGroupMemberships();
+				
+		GroupMembership groupMembership=null;
+		
+		for(GroupMembership gms : groupMemberships) {
+			
+		    if (gms.getGroup().getName().equals(request.getParameter("group")))
+		    {
+		    	request.setAttribute("message", "User already in this group");
+				
+				return "addToGroup.jsp";
+		    }
+		    else
+		    {
+		    	
+		    	groupMembership=gms;
+		        break;
+		    }
+		}
+		
+		
+		groupMembership.delete();
+		
+		new apis.Stormpath().addToGroup(request.getParameter("username"), request.getParameter("group"));
+		
+		request.setAttribute("message", "User added to Group successfully");
+		
+		return "addToGroup.jsp";
 	}
 
 }
